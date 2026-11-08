@@ -1,0 +1,301 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #c6fdff;
+}
+
+/* Configuração Base do Card */
+
+.card-wrapper {
+    animation: slideInFromLeft 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.card {
+    width: 320px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    /*  
+        No CSS, a propriedade overflow determina como o navegador deve lidar com o conteúdo que 
+        ultrapassa (transborda) os limites visuais da caixa de um elemento. Quando você define um 
+        tamanho fixo (como largura ou altura) para um contêiner e o conteúdo interno é grande demais 
+        para caber ali, o overflow dita o que acontece.
+
+        Principais Valores
+
+        O overflow funciona como uma abreviação para os eixos horizontal (overflow-x) e vertical 
+        (overflow-y). Os valores mais comuns aplicados são:
+
+        • visible (Padrão): O conteúdo excedente não é cortado e vaza para fora das bordas do elemento, 
+            podendo sobrepor outros componentes ao redor.
+        • hidden: O conteúdo que ultrapassa o tamanho do contêiner é escondido e cortado, ficando completamente 
+            invisível para o usuário.
+        • scroll: O conteúdo excedente é cortado, mas o navegador adiciona barras de rolagem 
+            (horizontal e vertical) para permitir a visualização de todo o conteúdo. As barras aparecem mesmo 
+            se o conteúdo couber perfeitamente.
+        • auto: Semelhante ao scroll, mas de forma inteligente: as barras de rolagem só aparecem se o conteúdo 
+            realmente transbordar o espaço disponível
+    */
+    overflow: hidden; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    /* Transição fluida aplicando aceleração em transform e box-shadow */
+
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    cursor: pointer;
+    position: relative;
+
+    /* ANIMAÇÃO DE ENTRADA AO CARREGAR A PÁGINA */
+
+    /*
+        Essa linha de código CSS define uma animação completa para um elemento HTML usando 
+        a propriedade abreviada animation. Ela faz com que o elemento surja deslizando da 
+        esquerda para a direita em pouco mais de meio segundo, com um movimento que 
+        começa rápido e desacelera suavemente no final, mantendo-se visível na sua 
+        posição final após o término.
+
+        Aqui está a quebra detalhada de cada termo dessa regra:
+
+        • slideInFromLeft (animation-name): É o nome da animação que foi criada em outro 
+            lugar do CSS usando @keyframes. Esse bloco de keyframes dita o que acontece 
+            visualmente (geralmente movendo o elemento de um transform: translateX(-100%) 
+            para translateX(0)).
+        • 0.6s (animation-duration): O tempo total que a animação leva para ser concluída. 
+            Neste caso, dura exatamente 0,6 segundos (600 milissegundos).
+        • cubic-bezier(0.25, 1, 0.5, 1) (animation-timing-function): Define o 
+            ritmo/velocidade da animação. Essa curva específica equivale a um efeito 
+            de "ease-out" customizado. Significa que a animação começa em uma velocidade 
+            muito rápida e desacelera de forma bem suave e elegante até parar.
+        • forwards (animation-fill-mode): Garante que o elemento permaneça no estado 
+            final da animação após ela acabar. Sem essa propriedade, o elemento "pularia" 
+            de volta para a sua posição original de antes da animação começar.
+
+    */
+
+    /* 
+        A estrutura é sempre: cubic-bezier(X1, Y1, X2, Y2)
+
+        • 1º Parâmetro (X1): A posição horizontal do primeiro manípulo. 
+            Controla o tempo no início da animação. Deve ser um valor obrigatoriamente 
+            entre 0 e 1.
+        • 2º Parâmetro (Y1): A posição vertical do primeiro manípulo. Controla o 
+            progresso/distância no início. Valores maiores que 1 fazem o elemento ir 
+            além do destino (efeito elástico).
+        • 3º Parâmetro (X2): A posição horizontal do segundo manípulo. Controla o tempo 
+            perto do final da animação. Deve ser um valor obrigatoriamente entre 0 e 1.
+        • 4º Parâmetro (Y2): A posição vertical do segundo manípulo. Controla o 
+            progresso/distância perto do final.
+
+       
+        Nesse caso, (0.25, 1, 0.5, 1):
+
+        • No início (0.25, 1): Você diz que com apenas 25% do tempo passado (0.25), 
+            a animação já deve atingir 100% do seu progresso (1). É por isso que ela 
+            começa extremamente rápida!
+
+        • No final (0.5, 1): Você ajusta o segundo manípulo para suavizar a chegada. 
+            Como o elemento já atingiu a posição final muito cedo, ele passa o resto 
+            do tempo (dos 25% aos 100% do tempo) apenas desacelerando suavemente 
+            até parar.
+
+    */
+}
+
+/* Container de Imagem */
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+
+    /*
+        A propriedade object-fit no CSS especifica como o conteúdo de um elemento substituído 
+        (como uma imagem <img> ou vídeo <video>) deve ser redimensionado e ajustado dentro da caixa ou 
+        contêiner onde ele está inserido.
+
+        Ela funciona de maneira muito parecida com a propriedade background-size, mas se aplica diretamente 
+        a tags de mídia no HTML, permitindo controlar se a imagem deve ser esticada, cortada ou preservada em 
+        sua proporção original quando mudamos o tamanho do seu contêiner.
+
+
+        Principais Valores
+
+        A propriedade aceita cinco palavras-chave principais:
+
+        • cover: A mídia mantém sua proporção original e preenche todo o espaço do contêiner. 
+            Se as proporções forem diferentes, as bordas da imagem serão recortadas para evitar distorção.
+        • contain: A mídia mantém sua proporção original, mas é redimensionada para caber inteira dentro do 
+            espaço disponível. Se o contêiner tiver formato diferente, restarão espaços vazios nas laterais 
+            ou acima/abaixo (efeito barras pretas).
+        • fill: O valor padrão (padrão inicial). A mídia é esticada ou espremida para preencher o contêiner 
+            por completo, ignorando a proporção original e distorcendo a imagem caso necessário.
+        • none: A mídia ignora completamente o tamanho do contêiner e mantém o seu tamanho original de fábrica.
+        • scale-down: O navegador avalia as opções none e contain para descobrir qual delas resultará no menor 
+            tamanho real para a imagem, aplicando essa escolha.
+
+    */
+
+    object-fit: cover;
+
+    /* Transição suave de zoom e rotação leve */
+
+    transition: transform 0.5s ease;
+}
+
+/* Badge Animado no Canto do Card */
+
+.badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ff4757;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+
+    /*
+        O z-index é uma propriedade do CSS que controla a ordem de empilhamento vertical (profundidade) 
+        de elementos sobrepostos em uma página da web.
+
+        Enquanto os eixos X (horizontal) e Y (vertical) movem os elementos pelos lados, para cima e para baixo, 
+        o eixo Z representa a terceira dimensão: a proximidade da tela em relação aos olhos do usuário.
+
+        O z-index aceita valores numéricos inteiros (positivos, negativos ou zero):
+
+        • Valores maiores ficam mais próximos de você (ficam na frente).
+        • Valores menores ou negativos afastam o elemento (ficam atrás).
+
+
+        A Regra de Ouro: Elementos Posicionados
+
+        O erro mais comum ao usar o z-index é esquecer que ele só funciona em elementos que possuem uma 
+        propriedade position diferente de static. Para que o navegador passe a respeitar o seu z-index, 
+        você deve definir o elemento com um destes posicionamentos:
+
+        • position: relative;
+        • position: absolute;
+        • position: fixed;
+        • position: sticky;
+
+    */
+    z-index: 2;
+
+    /* Animação contínua de pulsação */
+
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* Conteúdo */
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.25rem;
+    color: #2d3436;
+}
+
+.card-content p {
+    margin: 0 0 16px 0;
+    font-size: 0.9rem;
+    color: #636e72;
+    line-height: 1.5;
+}
+
+/* Botão com Transição Individual */
+
+.card-button {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #0984e3;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* ===================================================
+   EFEITOS INTERATIVOS (:hover)
+=================================================== */
+
+/* 1. Elevação do Card e Sombra Expandida */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 2. Zoom Suave na Imagem sem Estourar o Container */
+.card:hover .card-image img {
+    transform: scale(1.08);
+}
+
+/* 3. Feedback Visual ao Passar o Mouse no Botão */
+.card-button:hover {
+    background-color: #74b9ff;
+    transform: scale(1.03);
+}
+
+.card-button:active {
+    opacity: 80%;
+    transform: translateY(+2px);
+}
+
+/* ===================================================
+   KEYFRAMES DE ANIMAÇÃO
+=================================================== */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(255, 71, 87, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        /* Fora da tela à esquerda e ligeiramente inclinado */
+        transform: translateX(-100vw) rotate(-20deg);
+        opacity: 0;
+    }
+
+    70% {
+        /* Chega um pouco além do centro para dar um efeito de amortecimento/suavidade */
+        transform: translateX(0) rotate(2deg);
+    }
+
+    100%{
+        /* Posição final centralizada e perfeitamente reto */
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+}
